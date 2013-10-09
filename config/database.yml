@@ -1,0 +1,23 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: mg_test_app_development
+  pool: 5
+  username: rails
+  password:
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: mg_test_app_test
+  pool: 5
+  username: rails
+  password:
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: mg_test_app_production
+  pool: 5
+  username: rails
+  password:
