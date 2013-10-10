@@ -1,5 +1,7 @@
 require 'active_support/inflector'
 
+#notification :growl
+
 guard 'rspec', all_after_pass: false, cl: '--drb' do
 
   watch('config/routes.rb')
