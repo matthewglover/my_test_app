@@ -26,4 +26,5 @@ end
 
 group :doc do
   gem 'sdoc', require: false
+  gem 'rails_12factor', '0.0.2'
 end
