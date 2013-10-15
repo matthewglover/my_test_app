@@ -6,7 +6,7 @@ development:
   username: rails
   password:
 
-test:
+test: &test
   adapter: postgresql
   encoding: unicode
   database: mg_test_app_test
@@ -21,3 +21,6 @@ production:
   pool: 5
   username: rails
   password:
+
+cucumber:
+  <<: *test
