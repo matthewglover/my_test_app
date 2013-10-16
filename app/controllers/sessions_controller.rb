@@ -12,7 +12,6 @@ class SessionsController < ApplicationController
       flash.now[:error] = 'Invalid email/password combination'
       render 'new'
     end
-    #render 'new'
   end
 
   def destroy

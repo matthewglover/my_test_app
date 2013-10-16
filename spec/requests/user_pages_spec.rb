@@ -7,6 +7,7 @@ describe "UserPages" do
   
   subject { page }
 
+  ############### Index page #####################
   describe "index" do
     let(:user) { FactoryGirl.create(:user) } 
     before(:each) do
@@ -27,7 +28,7 @@ describe "UserPages" do
         User.paginate(page: 1).each do |user|
           expect(page).to have_selector('li', text: user.name)
         end
-    end
+      end
     end
 
     describe "delete links" do
@@ -52,13 +53,8 @@ describe "UserPages" do
     end
   end
 
-  describe "sign up" do
-    before { visit signup_path }
 
-    it { should have_content('Sign up') }
-    it { should have_title(full_title('Sign up')) }
-  end
-
+  ############### Profile page #####################
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
     before { visit user_path(user) }
@@ -67,9 +63,14 @@ describe "UserPages" do
     it { should have_title(user.name) }
   end
 
+
+  ############### Signup page #####################
   describe "signup" do
     
     before { visit signup_path }
+
+    it { should have_content('Sign up') }
+    it { should have_title(full_title('Sign up')) }
 
     let(:submit) { "Create my account" }
 
@@ -96,7 +97,7 @@ describe "UserPages" do
         fill_in "Name",       with: "Example User"
         fill_in "Email",        with: "user@example.com"
         fill_in "Password",        with: "foobar"
-        fill_in "Confirmation",        with: "foobar"
+        fill_in "Confirm password",        with: "foobar"
       end
 
       it "should create a user" do
@@ -150,6 +151,19 @@ describe "UserPages" do
       it { should_not have_link('Sign in', href: signin_path) }
       specify { expect(user.reload.name).to eq new_name }
       specify { expect(user.reload.email).to eq new_email }
+    end
+
+    describe "forbidden attributes" do
+      let(:params) do
+        { user: { admin: true,
+                      password: user.password,
+                      password_confirmation: user.password } }
+      end
+      before do
+        sign_in user, no_capybara: true
+        patch user_path(user), params
+      end
+      specify { expect(user.reload).not_to be_admin }
     end
   end
 end
